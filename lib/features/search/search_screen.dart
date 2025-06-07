@@ -16,7 +16,7 @@ class SearchScreen extends StatelessWidget {
     return ChangeNotifierProvider<SearchController>(
       create: (context) => SearchController(),
       child: Scaffold(
-        appBar: AppBar(title: const Text('Search News')),
+        appBar: AppBar(title: const Text('Search News'), automaticallyImplyLeading: false,),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Consumer(
@@ -29,7 +29,7 @@ class SearchScreen extends StatelessWidget {
                       hintText: 'Search for news...',
                       suffixIcon: const Icon(Icons.search, color: Color(0xFFA0A0A0),),
                     ),
-                    onChanged: (value) => sController.searchNews(value),
+                    onChanged: (value) => sController.onSearchChanged(value),
                   ),
                   const SizedBox(height: 16.0),
                   Expanded(
@@ -58,7 +58,7 @@ class SearchScreen extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (BuildContext context) {
-                                      return ArticleDetails(index: index, sController: sController);
+                                      return ArticleDetails(index: index, article: article, isBookmarked: isBookmarked);
                                     },
                                   ),
                                 );

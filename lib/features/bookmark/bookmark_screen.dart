@@ -12,7 +12,7 @@ class BookmarkScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Bookmarks')),
+      appBar: AppBar(title: const Text('Bookmarks'), automaticallyImplyLeading: false,),
       body: ValueListenableBuilder(
         /// (DONE) TODO : Task - Don't Add Hard Coded Values
         valueListenable: Hive.box(StorageKey.bookmarks).listenable(),

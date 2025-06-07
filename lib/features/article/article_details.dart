@@ -1,16 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart' hide SearchController;
 import 'package:flutter_svg/svg.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:news_app/core/extensions/extension.dart';
 import 'package:news_app/features/article/article_details.dart';
 import 'package:news_app/features/search/search_controller.dart';
 import 'package:provider/provider.dart';
 
-class ArticleDetails extends StatelessWidget {
-  const ArticleDetails({super.key, required this.index, required this.sController});
+import '../home/models/news_article_model.dart';
+
+class ArticleDetails extends StatefulWidget {
+  ArticleDetails({super.key, required this.index, required this.article, required this.isBookmarked});
 
   final int index;
-  final SearchController sController;
+  final NewsArticle article;
+  bool isBookmarked;
+
+  @override
+  State<ArticleDetails> createState() => _ArticleDetailsState();
+}
+
+class _ArticleDetailsState extends State<ArticleDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,7 +35,7 @@ class ArticleDetails extends StatelessWidget {
                 children: [
                   SizedBox(height: 20),
                   CachedNetworkImage(
-                    imageUrl: sController.articlesList[index].urlToImage ?? '',
+                    imageUrl: widget.article.urlToImage ?? '',
                     width: 400,
                     height: 228,
                     fit: BoxFit.cover,
@@ -37,7 +47,7 @@ class ArticleDetails extends StatelessWidget {
                   ),
                   SizedBox(height: 12),
                   Text(
-                    sController.articlesList[index].title,
+                    widget.article.title,
                     style: Theme.of(context).textTheme.labelLarge,
                   ),
                   SizedBox(height: 8),
@@ -45,12 +55,12 @@ class ArticleDetails extends StatelessWidget {
                     children: [
                       // Row()
                       Text(
-                        sController.articlesList[index].sourceName,
+                        widget.article.sourceName,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       SizedBox(width: 12),
                       Text(
-                        sController.articlesList[index].publishedAt.formatTimeAgo(),
+                        widget.article.publishedAt.formatTimeAgo(),
                         style: Theme.of(
                           context,
                         ).textTheme.bodyMedium?.copyWith(fontSize: 12),
@@ -63,10 +73,28 @@ class ArticleDetails extends StatelessWidget {
                         height: 24,
                       ),
                       SizedBox(width: 13),
-                      SvgPicture.asset(
-                        'assets/images/bookMark.svg',
-                        width: 24,
-                        height: 24,
+                      IconButton(
+                        icon: Icon(
+                          widget.isBookmarked ? Icons.bookmark : Icons.bookmark_border,
+                          color:
+                          widget.isBookmarked
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).iconTheme.color,
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          final box = Hive.box('bookmarks');
+                          setState(() {
+                            if (widget.isBookmarked) {
+                              box.delete(widget.article.url);
+                              widget.isBookmarked = false;
+                            } else {
+                              box.put(widget.article.url, widget.article);
+                              widget.isBookmarked = true;
+                            }
+                          });
+                        },
+
                       ),
                     ],
                   ),

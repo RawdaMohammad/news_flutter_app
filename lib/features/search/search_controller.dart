@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -11,8 +12,17 @@ class SearchController with ChangeNotifier{
   List<NewsArticle> articlesList = [];
   bool isLoading = false;
   String? errorMessage;
+  Timer? _debounce;
+
+  void onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      searchNews(query);
+    });
+  }
 
   Future<void> searchNews(String query) async {
+    query = query.trim();
     if (query.isEmpty) {
       articlesList = [];
       errorMessage = null;
@@ -27,7 +37,7 @@ class SearchController with ChangeNotifier{
     try {
       final repository = locator<BaseNewsApiRepository>();
       final articles = await repository.fetchEverything(query: query);
-      articlesList = articles;
+      articlesList = articles ?? [];
       isLoading = false;
       notifyListeners();
 

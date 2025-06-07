@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/core/constants/storage_key.dart';
+import 'package:news_app/core/extensions/extension.dart';
 import 'package:news_app/core/widgets/custom_text_form_field.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -70,12 +71,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
       });
       return;
     }
+    PreferencesManager().clear();
     await PreferencesManager().setString(StorageKey.useremail, _emailController.text);
-    await PreferencesManager().setString(StorageKey.username, _emailController.text.split('@').first);
+    await PreferencesManager().setString(StorageKey.username, _emailController.text.split('@').first.capitalize());
     await PreferencesManager().setString(StorageKey.userpassword, _passwordController.text);
     await PreferencesManager().setBool(StorageKey.isLoggedIn, true);
+
     if (!mounted) return;
-    Navigator.of(context).pushReplacementNamed('/main');
+    Navigator.of(context).pushReplacementNamed('/signin');
   }
 
   @override

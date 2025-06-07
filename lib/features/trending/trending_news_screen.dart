@@ -3,6 +3,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:news_app/core/extensions/extension.dart';
 import 'package:provider/provider.dart';
 
+import '../article/article_details.dart';
 import '../home/controllers/news_controller.dart';
 import '../home/widgets/news_card.dart';
 
@@ -45,6 +46,16 @@ class TrendingNewsScreen extends StatelessWidget {
                             article: article,
                             isBookmarked: isBookmarked,
                             formatTimeAgo: (date) => date.formatTimeAgo(),
+                            onTap: () async {
+                              final bool? result = await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) {
+                                    return ArticleDetails(index: index, article: article, isBookmarked: isBookmarked);
+                                  },
+                                ),
+                              );
+                            },
                           );
                         },
                       );

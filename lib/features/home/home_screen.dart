@@ -11,6 +11,7 @@ import 'package:news_app/features/home/widgets/news_card.dart';
 import 'package:news_app/features/home/widgets/trending_news_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../article/article_details.dart';
 import 'controllers/news_controller.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -77,6 +78,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 article: article,
                                 isBookmarked: isBookmarked,
                                 formatTimeAgo: (date) => date.formatTimeAgo(),
+                                onTap: () async {
+                                  final bool? result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (BuildContext context) {
+                                        return ArticleDetails(index: index, article: article, isBookmarked: isBookmarked);
+                                      },
+                                    ),
+                                  );
+                                },
                               );
                             },
                           );

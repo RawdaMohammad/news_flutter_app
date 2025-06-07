@@ -20,7 +20,7 @@ class ProfileController with ChangeNotifier{
 
   void loadData() async {
     username = PreferencesManager().getString(StorageKey.username) ?? 'Anonymous';
-    userPhone = PreferencesManager().getString(StorageKey.userphone) ?? '01011111111';
+    userPhone = PreferencesManager().getString(StorageKey.userphone) ?? '';
     userMail = PreferencesManager().getString(StorageKey.useremail) ?? 'user@gmail.com';
     userImagePath = PreferencesManager().getString(StorageKey.userImage);
     isLoading = false;

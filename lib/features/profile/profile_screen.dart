@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:news_app/features/auth/sign_up_screen.dart';
 import 'package:news_app/features/profile/country/country_screen.dart';
 import 'package:news_app/features/profile/profile_controller.dart';
 import 'package:news_app/features/profile/user_details_screen.dart';
@@ -23,7 +24,7 @@ class ProfileScreen extends StatelessWidget {
       child: Consumer(
           builder: (BuildContext context, ProfileController profileController, Widget? child) {
             return  Scaffold(
-              appBar: AppBar(title: const Text('Profile')),
+              appBar: AppBar(title: const Text('Profile'),  automaticallyImplyLeading: false,),
               body: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -156,9 +157,10 @@ class ProfileScreen extends StatelessWidget {
                     Divider(thickness: 1, color: Color(0xFFD1DAD6),),
                     ListTile(
                       onTap: () async {
-                        PreferencesManager().remove(StorageKey.username);
-                        PreferencesManager().remove(StorageKey.useremail);
-                        PreferencesManager().remove(StorageKey.userImage);
+                        // PreferencesManager().remove(StorageKey.username);
+                        // PreferencesManager().remove(StorageKey.useremail);
+                        // PreferencesManager().remove(StorageKey.userImage);
+                        // PreferencesManager().remove(StorageKey.userphone);
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
