@@ -57,5 +57,6 @@ class NewsController with ChangeNotifier{
       isLoadingEverything = false;
       notifyListeners();
     }
+    print(everythingArticles);
   }
 }

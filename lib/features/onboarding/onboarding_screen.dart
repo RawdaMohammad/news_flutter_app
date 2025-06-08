@@ -18,21 +18,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   final List<OnBoardingModel> onboardingData = [
     OnBoardingModel(
       image: 'assets/images/onboarding1.png',
-      title: 'Update for new features',
+      title: 'Discover News',
       desc:
-          "You deserve the best experience possible. That's why we've added new features and services to our app. Update now and see for yourself.",
+          "Swipe through trending news and explore your favorite categories — stay updated in just a tap!",
     ),
     OnBoardingModel(
       image: 'assets/images/onboarding2.png',
-      title: 'Update for new features',
+      title: 'Trending News',
       desc:
-          "You deserve the best experience possible. That's why we've added new features and services to our app. Update now and see for yourself.",
+          "Stay on top of what's happening now — catch the most talked-about headlines.",
     ),
     OnBoardingModel(
       image: 'assets/images/onboarding3.png',
-      title: 'Update for new features',
+      title: 'Bookmarks',
       desc:
-          "You deserve the best experience possible. That's why we've added new features and services to our app. Update now and see for yourself.",
+          "You can easily access the news you've saved for later.",
     ),
   ];
 
@@ -48,7 +48,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Future<void> _finishOnboarding() async {
-    /// (DONE) TODO : Task - Use Preference Manager And don't use hard coded values like [onboarding_complete]
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('onboarding_complete', true);
     if (!mounted) return;
@@ -65,9 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /// (DONE) TODO : Task - Use from theme data
       appBar: AppBar(
-        /// (DONE) TODO : Task - Add This values on theme data
         actions: [
           if (_currentPage < onboardingData.length - 1)
             TextButton(
@@ -91,17 +88,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   children: [
                     const SizedBox(height: 16),
 
-                    /// (DONE)  TODO : Task - Use This From Model
                     Image.asset(data.image!, height: 320, fit: BoxFit.contain),
                     const SizedBox(height: 32),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Text(
-                        /// (DONE) TODO : Task - Use This From Model
                         data.title!,
                         textAlign: TextAlign.center,
-
-                        /// (DONE) TODO : Task - Add This To Theme Data
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
                     ),
@@ -109,11 +102,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24.0),
                       child: Text(
-                        /// (DONE) TODO : Task - Use This From Model
                         data.desc!,
                         textAlign: TextAlign.center,
-
-                        /// (DONE) TODO : Task - Add This To Theme Data
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
                     ),
@@ -141,12 +131,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
             child: SizedBox(
               width: double.infinity,
               height: 56,
               child: ElevatedButton(
-                /// (DONE) TODO : Task - Add This To Theme Data
                 onPressed: _onNext,
                 child: Text(
                   _currentPage == onboardingData.length - 1 ? 'Get Started' : 'Next',
